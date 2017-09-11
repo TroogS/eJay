@@ -16,6 +16,7 @@ namespace DebtMgr.ViewModel.Dialogs
     public class DatabaseSelectorDialogViewModel : ViewModelBase
     {
         public event EventHandler RequestClose;
+        public bool ProgramRequestedClose = false;
 
         #region SelectDatabasePathText (string) Property
 
@@ -71,6 +72,7 @@ namespace DebtMgr.ViewModel.Dialogs
                     Properties.Settings.Default["Database"] = openFileDialog.FileName;
                     Properties.Settings.Default.Save();
 
+                    ProgramRequestedClose = true;
                     RequestClose?.Invoke(null, null);
                 }
                 catch (Exception)
@@ -113,6 +115,7 @@ namespace DebtMgr.ViewModel.Dialogs
                 Properties.Settings.Default["Database"] = saveFileDialog.FileName;
                 Properties.Settings.Default.Save();
 
+                ProgramRequestedClose = true;
                 RequestClose?.Invoke(null, null);
             }
         }

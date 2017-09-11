@@ -22,11 +22,8 @@
 
         <DockPanel Grid.Row="0">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Person">
-                    <MenuItem Header="_New" Command="{Binding MenuNewPersonCommand}" />
-                    <MenuItem Header="_Manage" IsEnabled="False" />
-                    <Separator />
-                    <MenuItem Header="_Exit" Command="{Binding MenuExitCommand}" />
+                <MenuItem Header="Menu">
+                    <MenuItem Header="_Switch Database" Command="{Binding SwitchDatabaseMenuCommand}" />
                 </MenuItem>
             </Menu>
         </DockPanel>

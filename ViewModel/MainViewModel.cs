@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows;
 using System;
 using System.Configuration;
+using System.Threading;
 using SQLite.Net;
 using SQLite.Net.Platform.Generic;
 
@@ -386,6 +387,32 @@ namespace DebtMgr.ViewModel
                 App.Database.Delete<Transaction>(TransactionHistoryListViewSelectedItem.Id);
                 UpdatePersonsList();
             }
+        }
+
+        #endregion
+
+        #region SwitchDatabaseMenuCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="SwitchDatabaseMenuCommand" />
+        /// </summary>
+        private RelayCommand _PrivateCommandName = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand SwitchDatabaseMenuCommand => _PrivateCommandName ?? (_PrivateCommandName = new RelayCommand(SwitchDatabaseMenuCommand_Execute));
+
+        private void SwitchDatabaseMenuCommand_Execute()
+        {
+            Properties.Settings.Default["Database"] = string.Empty;
+            Properties.Settings.Default.Save();
+
+            Thread.Sleep(100);
+
+
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
 
         #endregion
