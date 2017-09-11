@@ -343,7 +343,8 @@ namespace DebtMgr.ViewModel
 
             if (result == MessageBoxResult.Yes)
             {
-                App.Database.Delete<Person>(PersonListViewSelectedItem.Id);
+                App.Database.Delete(PersonListViewSelectedItem, true);
+
                 UpdatePersonsList();
             }
         }
