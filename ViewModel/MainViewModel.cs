@@ -174,6 +174,7 @@ namespace DebtMgr.ViewModel
                 _transactionHistoryListViewSelectedItem = value;
                 RaisePropertyChanged(() => TransactionHistoryListViewSelectedItem);
                 DeleteTransactionContextMenuCommand.RaiseCanExecuteChanged();
+                EditTransactionContextMenuCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -390,6 +391,34 @@ namespace DebtMgr.ViewModel
         }
 
         #endregion
+        #region EditTransactionContextMenuCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="EditTransactionContextMenuCommand" />
+        /// </summary>
+        private RelayCommand _editTransactionContextMenuCommand = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand EditTransactionContextMenuCommand => _editTransactionContextMenuCommand ?? (_editTransactionContextMenuCommand = new RelayCommand(EditTransactionContextMenuCommand_Execute, EditTransactionContextMenuCommand_CanExecute));
+
+        private bool EditTransactionContextMenuCommand_CanExecute()
+        {
+            if (TransactionHistoryListViewSelectedItem != null)
+                return true;
+            return false;
+        }
+
+        private void EditTransactionContextMenuCommand_Execute()
+        {
+            if (TransactionHistoryListViewSelectedItem == null) return;
+
+            var window = new EditTransactionDialogView(TransactionHistoryListViewSelectedItem.Id);
+            window.ShowDialog();
+        }
+
+        #endregion
 
         #region SwitchDatabaseMenuCommand Command
 
@@ -416,7 +445,6 @@ namespace DebtMgr.ViewModel
         }
 
         #endregion
-
         #region OpenDatabaseLocationMenuCommand Command
 
         /// <summary>

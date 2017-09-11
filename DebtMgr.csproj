@@ -105,6 +105,7 @@
     <Compile Include="Model\Person.cs" />
     <Compile Include="ViewModel\Dialogs\AddTransactionViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\DatabaseSelectorDialogViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\EditTransactionDialogViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\NewPersonDialogViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -113,6 +114,9 @@
     </Compile>
     <Compile Include="View\Dialogs\DatabaseSelectorDialogView.xaml.cs">
       <DependentUpon>DatabaseSelectorDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialogs\EditTransactionDialogView.xaml.cs">
+      <DependentUpon>EditTransactionDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Dialogs\NewPersonDialogView.xaml.cs">
       <DependentUpon>NewPersonDialogView.xaml</DependentUpon>
@@ -129,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Dialogs\DatabaseSelectorDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialogs\EditTransactionDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -120,6 +120,7 @@
                     </ListView.View>
                     <ListBox.Resources>
                         <ContextMenu x:Key="TransactionHistoryListViewContextMenu">
+                            <MenuItem Header="Edit Transaction" Command="{Binding EditTransactionContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />
                             <MenuItem Header="Add charge" Command="{Binding AddChargeContextMenuCommand}" />
                             <MenuItem Header="Add deposit" Command="{Binding AddDepositContextMenuCommand}" />
                             <MenuItem Header="Delete Transaction" Command="{Binding DeleteTransactionContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />

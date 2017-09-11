@@ -27,6 +27,8 @@ namespace DebtMgr.View.Dialogs
             DataContext = App.Locator.AddTransactionView;
         }
 
+        #region TextBox_OnKeyUp()
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Event handler. Called by TextBox for on key up events. </summary>
         ///
@@ -41,6 +43,9 @@ namespace DebtMgr.View.Dialogs
                 App.Locator.AddTransactionView.AddTransactionButtonClickCommand.Execute(null);
         }
 
+        #endregion
+        #region Window_OnKeyUp()
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Event handler. Called by Window for on key up events. </summary>
         ///
@@ -54,5 +59,7 @@ namespace DebtMgr.View.Dialogs
             if (e.Key.Equals(Key.Escape))
                 Close();
         }
+
+        #endregion
     }
 }

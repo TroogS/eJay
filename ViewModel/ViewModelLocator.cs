@@ -46,12 +46,14 @@ namespace DebtMgr.ViewModel
             SimpleIoc.Default.Register<NewPersonDialogViewModel>();
             SimpleIoc.Default.Register<AddTransactionViewModel>();
             SimpleIoc.Default.Register<DatabaseSelectorDialogViewModel>();
+            SimpleIoc.Default.Register<EditTransactionDialogViewModel>();
         }
 
         public MainViewModel MainView => ServiceLocator.Current.GetInstance<MainViewModel>();
         public NewPersonDialogViewModel NewPersonDialogView => ServiceLocator.Current.GetInstance<NewPersonDialogViewModel>();
         public AddTransactionViewModel AddTransactionView => ServiceLocator.Current.GetInstance<AddTransactionViewModel>();
         public DatabaseSelectorDialogViewModel DatabaseSelectorDialogView => ServiceLocator.Current.GetInstance<DatabaseSelectorDialogViewModel>();
+        public EditTransactionDialogViewModel EditTransactionDialogView => ServiceLocator.Current.GetInstance<EditTransactionDialogViewModel>();
 
         public static void Cleanup()
         {
