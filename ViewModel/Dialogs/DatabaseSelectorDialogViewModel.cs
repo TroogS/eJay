@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using DebtMgr.Model;
 using GalaSoft.MvvmLight;
@@ -16,7 +13,7 @@ namespace DebtMgr.ViewModel.Dialogs
     public class DatabaseSelectorDialogViewModel : ViewModelBase
     {
         public event EventHandler RequestClose;
-        public bool ProgramRequestedClose = false;
+        public bool ProgramRequestedClose;
 
         #region SelectDatabasePathText (string) Property
 
@@ -55,9 +52,11 @@ namespace DebtMgr.ViewModel.Dialogs
 
         private void SelectDatabaseButtonClick_Execute()
         {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.CheckFileExists = true;
-            openFileDialog.Filter = "Debt Manager Database|*.dmdb|All files|*.*";
+            var openFileDialog = new OpenFileDialog
+            {
+                CheckFileExists = true,
+                Filter = "Debt Manager Database|*.dmdb|All files|*.*"
+            };
 
             //Application.Current.Shutdown();
 
@@ -106,9 +105,11 @@ namespace DebtMgr.ViewModel.Dialogs
 
         private void CreateDatabaseButtonClick_Execute()
         {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Debt Manager Database|*.dmdb|Standard database|*.db";
-            saveFileDialog.CreatePrompt = true;
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Debt Manager Database|*.dmdb|Standard database|*.db",
+                CreatePrompt = true
+            };
 
             if (saveFileDialog.ShowDialog() == true)
             {

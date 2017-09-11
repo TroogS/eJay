@@ -7,10 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System;
-using System.Configuration;
 using System.Threading;
-using SQLite.Net;
-using SQLite.Net.Platform.Generic;
+using System.IO;
+using System.Diagnostics;
 
 namespace DebtMgr.ViewModel
 {
@@ -414,6 +413,28 @@ namespace DebtMgr.ViewModel
 
             System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
             Application.Current.Shutdown();
+        }
+
+        #endregion
+
+        #region OpenDatabaseLocationMenuCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="OpenDatabaseLocationMenuCommand" />
+        /// </summary>
+        private RelayCommand _openDatabaseLocationMenuCommand = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand OpenDatabaseLocationMenuCommand => _openDatabaseLocationMenuCommand ?? (_openDatabaseLocationMenuCommand = new RelayCommand(OpenDatabaseLocationMenuCommand_Execute));
+
+        private void OpenDatabaseLocationMenuCommand_Execute()
+        {
+            if (File.Exists(Properties.Settings.Default.Database))
+            {
+                Process.Start("explorer.exe", "/select, " + Properties.Settings.Default.Database);
+            }
         }
 
         #endregion
