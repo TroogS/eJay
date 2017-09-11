@@ -1,0 +1,36 @@
+﻿<Window x:Class="DebtMgr.View.Dialogs.NewPersonDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DebtMgr.View.Dialogs"
+        mc:Ignorable="d"
+        Name="NewPersonDialogViewWindow"
+        Icon="../../Content/addperson.ico"
+        Title="New Person" Height="205" Width="300"
+        KeyUp="Window_KeyUp">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="New Person" FontWeight="Bold" FontSize="18"></Label>
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 0">
+            <TextBox KeyUp="TextBox_OnKeyUp" Name="FirstNameTextBox" Text="{Binding FirstNameTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="0 0 0 -5"></TextBox>
+            <Label Content="First name"></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10 5">
+            <TextBox KeyUp="TextBox_OnKeyUp" Text="{Binding LastNameTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="0 0 0 -5"></TextBox>
+            <Label Content="Last name"></Label>
+        </StackPanel>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Content="Create Person" FontSize="14" Padding="5" Margin="10 -10" Command="{Binding CreatePersonButtonClickCommand}"></Button>
+        </Grid>
+    </Grid>
+</Window>
