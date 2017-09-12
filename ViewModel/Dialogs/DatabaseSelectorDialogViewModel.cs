@@ -12,8 +12,12 @@ namespace DebtMgr.ViewModel.Dialogs
 {
     public class DatabaseSelectorDialogViewModel : ViewModelBase
     {
+        #region Public Properties
+
         public event EventHandler RequestClose;
         public bool ProgramRequestedClose;
+
+        #endregion
 
         #region SelectDatabasePathText (string) Property
 

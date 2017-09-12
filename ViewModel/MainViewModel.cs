@@ -56,6 +56,7 @@ namespace DebtMgr.ViewModel
                 _personListViewSelectedItem = value;
                 RaisePropertyChanged(() => PersonListViewSelectedItem);
                 DeletePersonContextMenuCommand.RaiseCanExecuteChanged();
+                EditPersonContextMenuCommand.RaiseCanExecuteChanged();
 
                 UpdateDetailView();
             }
@@ -180,30 +181,6 @@ namespace DebtMgr.ViewModel
 
         #endregion
 
-        #region MenuNewPersonCommand Command
-
-        /// <summary>
-        /// Private member backing variable for <see cref="MenuNewPersonCommand" />
-        /// </summary>
-        private RelayCommand _menuNewPersonCommand = null;
-
-        /// <summary>
-        /// Comment
-        /// </summary>
-        public RelayCommand MenuNewPersonCommand => _menuNewPersonCommand ?? (_menuNewPersonCommand = new RelayCommand(MenuNewPersonCommand_Execute, MenuNewPersonCommand_CanExecute));
-
-        private bool MenuNewPersonCommand_CanExecute()
-        {
-            return true;
-        }
-
-        private void MenuNewPersonCommand_Execute()
-        {
-            var window = new NewPersonDialogView();
-            window.ShowDialog();
-        }
-
-        #endregion
         #region SortPersonListViewCommand
 
         /// <summary>   The sort person list view command. </summary>
@@ -262,7 +239,14 @@ namespace DebtMgr.ViewModel
         /// <summary>
         /// Comment
         /// </summary>
-        public RelayCommand AddChargeContextMenuCommand => _addChargeContextMenuCommand ?? (_addChargeContextMenuCommand = new RelayCommand(AddChargeContextMenuCommand_Execute));
+        public RelayCommand AddChargeContextMenuCommand => _addChargeContextMenuCommand ?? (_addChargeContextMenuCommand = new RelayCommand(AddChargeContextMenuCommand_Execute, AddChargeContextMenuCommand_CanExecute));
+
+        private bool AddChargeContextMenuCommand_CanExecute()
+        {
+            if (PersonListViewItemSource != null & PersonListViewItemSource.Count > 0)
+                return true;
+            return false;
+        }
 
         private void AddChargeContextMenuCommand_Execute()
         {
@@ -281,7 +265,14 @@ namespace DebtMgr.ViewModel
         /// <summary>
         /// Comment
         /// </summary>
-        public RelayCommand AddDepositContextMenuCommand => _addDepositContextMenuCommand ?? (_addDepositContextMenuCommand = new RelayCommand(AddDepositContextMenuCommand_Execute));
+        public RelayCommand AddDepositContextMenuCommand => _addDepositContextMenuCommand ?? (_addDepositContextMenuCommand = new RelayCommand(AddDepositContextMenuCommand_Execute, AddDepositContextMenuCommand_CanExecute));
+
+        private bool AddDepositContextMenuCommand_CanExecute()
+        {
+            if (PersonListViewItemSource != null & PersonListViewItemSource.Count > 0)
+                return true;
+            return false;
+        }
 
         private void AddDepositContextMenuCommand_Execute()
         {
@@ -304,8 +295,39 @@ namespace DebtMgr.ViewModel
 
         private void NewPersonContextMenuCommand_Execute()
         {
-            var window = new NewPersonDialogView();
+            var window = new NewPersonDialogView(PersonDialogMode.New);
             window.ShowDialog();
+        }
+
+        #endregion
+
+        #region EditPersonContextMenuCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="EditPersonContextMenuCommand" />
+        /// </summary>
+        private RelayCommand _editPersonContextMenuCommand = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand EditPersonContextMenuCommand => _editPersonContextMenuCommand ?? (_editPersonContextMenuCommand = new RelayCommand(EditPersonContextMenuCommand_Execute, EditPersonContextMenuCommand_CanExecute));
+
+        private bool EditPersonContextMenuCommand_CanExecute()
+        {
+            if (PersonListViewSelectedItem != null)
+                return true;
+            return false;
+        }
+
+        private void EditPersonContextMenuCommand_Execute()
+        {
+            if (PersonListViewSelectedItem != null)
+            {
+                var window = new NewPersonDialogView(PersonDialogMode.Edit, PersonListViewSelectedItem.Id);
+                window.ShowDialog();
+            }
+                
         }
 
         #endregion
@@ -334,7 +356,7 @@ namespace DebtMgr.ViewModel
 
             var result = MessageBox.Show(
                 string.Format(
-                    "Are you sure to delete?\n\n{0} {1}",
+                    "Are you sure to delete this person including all transactions?\n\n{0} {1}",
                     PersonListViewSelectedItem.FirstName,
                     PersonListViewSelectedItem.LastName),
                 "Delete Person",
@@ -376,10 +398,13 @@ namespace DebtMgr.ViewModel
 
             var result = MessageBox.Show(
                 string.Format(
-                    "Are you sure to delete?\n\n{1} €\n{0}",
-                    TransactionHistoryListViewSelectedItem.Description,
-                    TransactionHistoryListViewSelectedItem.Amount),
-                "Delete Transaction",
+                    "Are you sure to delete this {0}?\n\n{1} {2}\nAmount: {3} €\n{4}",
+                    TransactionHistoryListViewSelectedItem.Type,
+                    TransactionHistoryListViewSelectedItem.Person.FirstName,
+                    TransactionHistoryListViewSelectedItem.Person.LastName,
+                    TransactionHistoryListViewSelectedItem.Amount,
+                    TransactionHistoryListViewSelectedItem.Description),
+                string.Format("Delete {0}", TransactionHistoryListViewSelectedItem.Type),
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
 
@@ -497,6 +522,9 @@ namespace DebtMgr.ViewModel
 
             var overallBalance = personList.Sum(x => x.Total);
             OverallBalanceLabel = overallBalance.ToString();
+            
+            AddChargeContextMenuCommand.RaiseCanExecuteChanged();
+            AddDepositContextMenuCommand.RaiseCanExecuteChanged();
 
             // Restore selection
             if (rememberSelection != null && PersonListViewItemSource.Any(x => x.Id == rememberSelection))

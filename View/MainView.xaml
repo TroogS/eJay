@@ -57,7 +57,7 @@
                         <TextBlock Text="€" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
                     </TextBlock>
                     <Button Grid.Column="1" Padding="5" ToolTip="New Person" Margin="5 0 5 5" Command="{Binding NewPersonContextMenuCommand}">
-                        <Image Source="../Content/addperson.ico" Width="30" />
+                        <Image Source="../Content/addperson.ico" Height="30" />
                     </Button>
                     
                 </Grid>
@@ -82,10 +82,12 @@
                     </ListView.View>
                     <ListBox.Resources>
                         <ContextMenu x:Key="PersonListViewContextMenu">
-                            <MenuItem Header="Add charge" Command="{Binding AddChargeContextMenuCommand}" />
-                            <MenuItem Header="Add deposit" Command="{Binding AddDepositContextMenuCommand}" />
-                            <MenuItem Header="New Person" Command="{Binding NewPersonContextMenuCommand}" />
-                            <MenuItem Header="Delete Person" Command="{Binding DeletePersonContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                            <MenuItem Header="_Edit Person" Command="{Binding EditPersonContextMenuCommand}" />
+                            <MenuItem Header="Delete Person" Command="{Binding DeletePersonContextMenuCommand}" />
+                            <MenuItem Header="_New Person" Command="{Binding NewPersonContextMenuCommand}" />
+                            <Separator></Separator>
+                            <MenuItem Header="Add _Charge" Command="{Binding AddChargeContextMenuCommand}" />
+                            <MenuItem Header="Add _Deposit" Command="{Binding AddDepositContextMenuCommand}" />
                         </ContextMenu>
                     </ListBox.Resources>
                     <ListBox.ContextMenu>
@@ -122,10 +124,10 @@
                         <TextBlock Text="€" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
                     </TextBlock>
                     <Button Grid.Column="1" Padding="5" ToolTip="Add Charge" Margin="5 0 0 5" Command="{Binding AddChargeContextMenuCommand}">
-                        <Image Source="../Content/money_red.ico" Width="30" />
+                        <Image Source="../Content/money_red.ico" Height="30" />
                     </Button>
                     <Button Grid.Column="2" Padding="5" ToolTip="Add Deposit" Margin="5 0 5 5" Command="{Binding AddDepositContextMenuCommand}">
-                        <Image Source="../Content/money_green.ico" Width="30" />
+                        <Image Source="../Content/money_green.ico" Height="30" />
                     </Button>
                 </Grid>
                 <ListView Name="TransactionHistoryListView" Grid.Row="2" ItemsSource="{Binding TransactionHistoryListViewItemSource}" SelectedItem="{Binding TransactionHistoryListViewSelectedItem}" HorizontalContentAlignment="Stretch">
@@ -149,10 +151,11 @@
                     </ListView.View>
                     <ListBox.Resources>
                         <ContextMenu x:Key="TransactionHistoryListViewContextMenu">
-                            <MenuItem Header="Edit Transaction" Command="{Binding EditTransactionContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />
-                            <MenuItem Header="Add charge" Command="{Binding AddChargeContextMenuCommand}" />
-                            <MenuItem Header="Add deposit" Command="{Binding AddDepositContextMenuCommand}" />
+                            <MenuItem Header="_Edit Transaction" Command="{Binding EditTransactionContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />
                             <MenuItem Header="Delete Transaction" Command="{Binding DeleteTransactionContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />
+                            <Separator></Separator>
+                            <MenuItem Header="Add _Charge" Command="{Binding AddChargeContextMenuCommand}" />
+                            <MenuItem Header="Add _Deposit" Command="{Binding AddDepositContextMenuCommand}" />
                         </ContextMenu>
                     </ListBox.Resources>
                     <ListBox.ContextMenu>

@@ -8,7 +8,59 @@ namespace DebtMgr.ViewModel.Dialogs
 {
     public class NewPersonDialogViewModel : ViewModelBase
     {
+        #region Public Properties
+
         public event EventHandler RequestClose;
+        public PersonDialogMode DialogMode { get; set; }
+        public Guid EditPersonId { get; set; }
+        public Person EditPerson { get; set; }
+
+        #endregion
+
+        #region WindowTitle (string) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="WindowTitle" />
+        /// </summary>
+        private string _windowTitle;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public string WindowTitle
+        {
+            get { return _windowTitle; }
+
+            set
+            {
+                _windowTitle = value;
+                RaisePropertyChanged(() => WindowTitle);
+            }
+        }
+
+        #endregion
+        #region SaveButtonText (string) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="SaveButtonText" />
+        /// </summary>
+        private string _saveButtonText;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public string SaveButtonText
+        {
+            get { return _saveButtonText; }
+
+            set
+            {
+                _saveButtonText = value;
+                RaisePropertyChanged(() => SaveButtonText);
+            }
+        }
+
+        #endregion
 
         #region FirstNameTextBoxText (string) Property
 
@@ -82,26 +134,70 @@ namespace DebtMgr.ViewModel.Dialogs
         {
             if (CreatePersonButtonClickCommand_CanExecute())
             {
-                var newPerson = new Person
+                bool success = false;
+                if (DialogMode == PersonDialogMode.New)
                 {
-                    FirstName = FirstNameTextBoxText,
-                    LastName = LastNameTextBoxText
-                };
+                    var newPerson = new Person
+                    {
+                        FirstName = FirstNameTextBoxText,
+                        LastName = LastNameTextBoxText
+                    };
 
-                var resultId = App.Database.Insert(newPerson);
+                    if (App.Database.Insert(newPerson) == 1)
+                        success = true;
+                }
 
-                if (resultId == 1)
+                if (DialogMode == PersonDialogMode.Edit)
+                {
+                    EditPerson.FirstName = FirstNameTextBoxText;
+                    EditPerson.LastName = LastNameTextBoxText;
+                    if(App.Database.InsertOrReplace(EditPerson) == 1)
+                        success = true;
+                }
+
+                if (success)
                 {
                     App.Locator.MainView.UpdatePersonsList();
                     App.Locator.AddTransactionView.UpdatesPersonsComboBox();
                     RequestClose?.Invoke(null, null);
-                    ClearView();
                 }
                 else
                 {
                     MessageBox.Show("Something bad happened", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        #endregion
+
+        #region SetModeSpecifics()
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Sets mode specifics. </summary>
+        ///
+        /// <remarks>   Andre Beging, 12.09.2017. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public void SetModeSpecifics()
+        {
+            if (DialogMode != PersonDialogMode.Edit || EditPersonId == Guid.Empty)
+            {
+                ClearView();
+                return;
+            }
+
+            // edit mode
+            EditPerson = App.Database.Get<Person>(EditPersonId);
+
+            if (EditPerson == null)
+            {
+                ClearView();
+                return;
+            }
+
+            FirstNameTextBoxText = EditPerson.FirstName;
+            LastNameTextBoxText = EditPerson.LastName;
+            WindowTitle = "Edit Person";
+            SaveButtonText = "Save";
         }
 
         #endregion
@@ -113,10 +209,14 @@ namespace DebtMgr.ViewModel.Dialogs
         ///
         /// <remarks>   Andre Beging, 08.09.2017. </remarks>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        private void ClearView()
+        public void ClearView()
         {
             FirstNameTextBoxText = string.Empty;
             LastNameTextBoxText = string.Empty;
+            DialogMode = PersonDialogMode.New;
+            WindowTitle = "New Person";
+            SaveButtonText = "Create";
+            EditPersonId = Guid.Empty;
         }
 
         #endregion

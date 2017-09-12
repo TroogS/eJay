@@ -16,4 +16,15 @@ namespace DebtMgr.Model
         [Description("Charge")]
         Charge
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Values that represent person dialog modes. </summary>
+    ///
+    /// <remarks>   Andre Beging, 12.09.2017. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public enum PersonDialogMode
+    {
+        New,
+        Edit
+    }
 }

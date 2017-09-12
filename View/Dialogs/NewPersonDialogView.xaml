@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Name="NewPersonDialogViewWindow"
         Icon="../../Content/addperson.ico"
-        Title="New Person" Height="205" Width="300"
+        Title="{Binding WindowTitle}" Height="205" Width="300"
         KeyUp="Window_KeyUp">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="New Person" FontWeight="Bold" FontSize="18"></Label>
+        <Label Grid.Row="0" Content="{Binding ElementName=NewPersonDialogViewWindow, Path=Title}" FontWeight="Bold" FontSize="18"></Label>
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10 0">
             <TextBox KeyUp="TextBox_OnKeyUp" Name="FirstNameTextBox" Text="{Binding FirstNameTextBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Margin="0 0 0 -5"></TextBox>
             <Label Content="First name"></Label>
@@ -30,7 +30,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Create Person" FontSize="14" Padding="5" Margin="10 -10" Command="{Binding CreatePersonButtonClickCommand}"></Button>
+            <Button Grid.Column="1" Content="{Binding SaveButtonText}" FontSize="14" Padding="5" Margin="10 -10" Command="{Binding CreatePersonButtonClickCommand}"></Button>
         </Grid>
     </Grid>
 </Window>
