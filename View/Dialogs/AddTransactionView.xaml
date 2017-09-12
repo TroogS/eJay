@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:c="clr-namespace:CurrencyTextBoxControl;assembly=CurrencyTextBoxControl"
         mc:Ignorable="d"
-        Icon="../../Content/moneybag.ico"
+        Icon="{Binding WindowIcon}"
         Name="AddTransactionViewWindow"
         Title="{Binding WindowTitle}" Height="300" Width="300"
         KeyUp="Window_OnKeyUp">

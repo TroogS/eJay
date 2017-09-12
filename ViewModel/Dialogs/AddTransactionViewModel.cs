@@ -43,6 +43,28 @@ namespace DebtMgr.ViewModel.Dialogs
         }
 
         #endregion
+        #region WindowIcon (string) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="WindowIcon" />
+        /// </summary>
+        private string _windowIcon;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public string WindowIcon
+        {
+            get { return _windowIcon; }
+
+            set
+            {
+                _windowIcon = value;
+                RaisePropertyChanged(() => WindowIcon);
+            }
+        }
+
+        #endregion
 
         #region AmountTextBoxText (string) Property
 
@@ -269,11 +291,13 @@ namespace DebtMgr.ViewModel.Dialogs
             if (DialogMode == TransactionType.Deposit)
             {
                 WindowTitle = "Add Deposit";
+                WindowIcon = "../../Content/money_green.ico";
             }
 
             if (DialogMode == TransactionType.Charge)
             {
                 WindowTitle = "Add Charge";
+                WindowIcon = "../../Content/money_red.ico";
             }
 
             PersonComboBoxSelectedItem =

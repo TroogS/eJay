@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace DebtMgr.View
@@ -40,10 +39,10 @@ namespace DebtMgr.View
                 if (App.Locator.MainView.DeletePersonContextMenuCommand.CanExecute(null))
                     App.Locator.MainView.DeletePersonContextMenuCommand.Execute(null);
             }
-            
         }
 
         #endregion
+
         #region TransactionHistoryListViewOnKeyUp()
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

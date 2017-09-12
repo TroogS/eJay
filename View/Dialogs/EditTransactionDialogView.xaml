@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DebtMgr.View.Dialogs"
         xmlns:currencyTextBoxControl="clr-namespace:CurrencyTextBoxControl;assembly=CurrencyTextBoxControl"
         mc:Ignorable="d"
-        Icon="../../Content/moneybag.ico"
+        Icon="{Binding WindowIcon}"
         Name="EditTransactionViewWindow"
         Title="{Binding WindowTitle}" Height="300" Width="300"
         KeyUp="Window_KeyUp">

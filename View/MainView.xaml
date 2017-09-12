@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:DebtMgr.Converters"
         mc:Ignorable="d"
-        Icon="../Content/icon.ico"
-        Title="Debt Manager" Height="600" Width="900">
+        Icon="../Content/money_green.ico"
+        Title="Debt Manager" Height="600" MinHeight="600" Width="900" MinWidth="900">
     <Window.Resources>
         <converters:AmountToColorConverter x:Key="AmountToColorConverter" />
         <Style TargetType="ListViewItem">
@@ -34,6 +34,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <!-- #region PersonListView -->
@@ -45,11 +46,21 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Overview" FontWeight="Bold" FontSize="22" Margin="0 0 0 -5"></Label>
-                <TextBlock Grid.Row="1" FontSize="18" Margin="5 0 0 5">
-                    <TextBlock Text="Overall Balance:"></TextBlock>
-                    <TextBlock Text="{Binding OverallBalanceLabel}" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                    <TextBlock Text="€" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                </TextBlock>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" FontSize="18" Margin="5 0 0 5" VerticalAlignment="Center">
+                        <TextBlock Text="Overall Balance:"></TextBlock>
+                        <TextBlock Text="{Binding OverallBalanceLabel}" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                        <TextBlock Text="€" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                    </TextBlock>
+                    <Button Grid.Column="1" Padding="5" ToolTip="New Person" Margin="5 0 5 5" Command="{Binding NewPersonContextMenuCommand}">
+                        <Image Source="../Content/addperson.ico" Width="30" />
+                    </Button>
+                    
+                </Grid>
                 <ListView Name="PersonListView"  Grid.Row="2" ItemsSource="{Binding PersonListViewItemSource}" SelectedItem="{Binding PersonListViewSelectedItem}">
                     <ListView.View>
                         <GridView>
@@ -84,7 +95,12 @@
             </Grid>
 
             <!-- #endregion -->
-            <Grid Grid.Column="1">
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            
+            <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -94,11 +110,24 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Content="{Binding DetailViewHeaderLabelContent}" FontWeight="Bold" FontSize="22" Margin="0 0 0 -5"></Label>
-                <TextBlock Grid.Row="1" FontSize="18" Margin="5 0 0 5">
-                    <TextBlock Text="Balance:"></TextBlock>
-                    <TextBlock Text="{Binding DetailViewBalanceLabel}" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                    <TextBlock Text="€" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                </TextBlock>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" FontSize="18" Margin="5 0 0 5" VerticalAlignment="Center">
+                        <TextBlock Text="Balance:"></TextBlock>
+                        <TextBlock Text="{Binding DetailViewBalanceLabel}" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                        <TextBlock Text="€" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                    </TextBlock>
+                    <Button Grid.Column="1" Padding="5" ToolTip="Add Charge" Margin="5 0 0 5" Command="{Binding AddChargeContextMenuCommand}">
+                        <Image Source="../Content/money_red.ico" Width="30" />
+                    </Button>
+                    <Button Grid.Column="2" Padding="5" ToolTip="Add Deposit" Margin="5 0 5 5" Command="{Binding AddDepositContextMenuCommand}">
+                        <Image Source="../Content/money_green.ico" Width="30" />
+                    </Button>
+                </Grid>
                 <ListView Name="TransactionHistoryListView" Grid.Row="2" ItemsSource="{Binding TransactionHistoryListViewItemSource}" SelectedItem="{Binding TransactionHistoryListViewSelectedItem}" HorizontalContentAlignment="Stretch">
                     <ListView.View>
                         <GridView>
@@ -115,7 +144,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Width="Auto" Header="Description" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Width="357" Header="Description" />
                         </GridView>
                     </ListView.View>
                     <ListBox.Resources>

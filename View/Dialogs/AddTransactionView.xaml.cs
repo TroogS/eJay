@@ -1,6 +1,5 @@
 ﻿using DebtMgr.Extensions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using DebtMgr.Model;
 
@@ -25,6 +24,10 @@ namespace DebtMgr.View.Dialogs
             App.Locator.AddTransactionView.RequestClose += (s, e) => Close();
 
             DataContext = App.Locator.AddTransactionView;
+
+            //Uri iconUri = new Uri("pack://application:,,,/Content/money_red.ico", UriKind.RelativeOrAbsolute);
+
+            //this.Icon = BitmapFrame.Create(iconUri);
         }
 
         #region TextBox_OnKeyUp()

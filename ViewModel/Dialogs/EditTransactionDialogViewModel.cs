@@ -44,6 +44,29 @@ namespace DebtMgr.ViewModel.Dialogs
         }
 
         #endregion
+        #region WindowIcon (string) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="WindowIcon" />
+        /// </summary>
+        private string _windowIcon;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public string WindowIcon
+        {
+            get { return _windowIcon; }
+
+            set
+            {
+                _windowIcon = value;
+                RaisePropertyChanged(() => WindowIcon);
+            }
+        }
+
+        #endregion
+
         #region AmountTextBoxText (string) Property
 
         /// <summary>
@@ -215,9 +238,15 @@ namespace DebtMgr.ViewModel.Dialogs
             DatePickerSelectedDate = _transaction.Time;
 
             if (_transaction.Type == TransactionType.Charge)
+            {
                 WindowTitle = "Edit Charge";
+                WindowIcon = "../../Content/money_red.ico";
+            }
             else if (_transaction.Type == TransactionType.Deposit)
+            { 
                 WindowTitle = "Edit Deposit";
+                WindowIcon = "../../Content/money_green.ico";
+            }
         }
 
         #endregion
