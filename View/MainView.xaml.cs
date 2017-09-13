@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using DebtMgr.Helper;
 
 namespace DebtMgr.View
 {
@@ -63,5 +67,51 @@ namespace DebtMgr.View
         }
 
         #endregion
+
+        #region PersonListView_OnMouseDoubleClick()
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Event handler. Called by PersonListView for on mouse double click events.
+        /// </summary>
+        ///
+        /// <remarks>   Andre Beging, 13.09.2017. </remarks>
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Mouse button event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void PersonListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            App.Locator.MainView.EditPersonContextMenuCommand.Execute(null);
+        }
+
+        #endregion
+
+        #region TransactionHistoryListView_OnMouseDoubleClick()
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// Event handler. Called by TransactionHistoryListView for on mouse double click events.
+        /// </summary>
+        ///
+        /// <remarks>   Andre Beging, 13.09.2017. </remarks>
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Mouse button event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void TransactionHistoryListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            App.Locator.MainView.EditTransactionContextMenuCommand.Execute(null);
+        }
+
+        #endregion
+
+        private void PrintContextMenu_OnClick(object sender, RoutedEventArgs e)
+        {
+            //var targetElement = TransactionHistoryListView;
+
+            //PrintHelper.SaveUsingEncoder("test.png", targetElement);
+            return;
+        }
     }
 }

@@ -521,7 +521,7 @@ namespace DebtMgr.ViewModel
             PersonListViewItemSource = personList;
 
             var overallBalance = personList.Sum(x => x.Total);
-            OverallBalanceLabel = overallBalance.ToString();
+            OverallBalanceLabel = string.Format("{0:0.00}", overallBalance);
             
             AddChargeContextMenuCommand.RaiseCanExecuteChanged();
             AddDepositContextMenuCommand.RaiseCanExecuteChanged();
@@ -553,7 +553,7 @@ namespace DebtMgr.ViewModel
 
             DetailViewHeaderLabelContent = string.Format("{0} {1}", PersonListViewSelectedItem.FirstName,
                 PersonListViewSelectedItem.LastName);
-            DetailViewBalanceLabel = PersonListViewSelectedItem.Total.ToString();
+            DetailViewBalanceLabel = string.Format("{0:0.00}", PersonListViewSelectedItem.Total);
 
             TransactionHistoryListViewItemSource = PersonListViewSelectedItem.Transactions.OrderByDescending(x => x.Time).ToList();
         }

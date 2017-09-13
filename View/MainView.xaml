@@ -61,7 +61,7 @@
                     </Button>
                     
                 </Grid>
-                <ListView Name="PersonListView"  Grid.Row="2" ItemsSource="{Binding PersonListViewItemSource}" SelectedItem="{Binding PersonListViewSelectedItem}">
+                <ListView Name="PersonListView"  Grid.Row="2" ItemsSource="{Binding PersonListViewItemSource}" SelectedItem="{Binding PersonListViewSelectedItem}" MouseDoubleClick="PersonListView_OnMouseDoubleClick">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Width="100">
@@ -88,6 +88,8 @@
                             <Separator></Separator>
                             <MenuItem Header="Add _Charge" Command="{Binding AddChargeContextMenuCommand}" />
                             <MenuItem Header="Add _Deposit" Command="{Binding AddDepositContextMenuCommand}" />
+                            <Separator></Separator>
+                            <MenuItem Header="_Print" Click="PrintContextMenu_OnClick" IsEnabled="False" />
                         </ContextMenu>
                     </ListBox.Resources>
                     <ListBox.ContextMenu>
@@ -130,7 +132,7 @@
                         <Image Source="../Content/money_green.ico" Height="30" />
                     </Button>
                 </Grid>
-                <ListView Name="TransactionHistoryListView" Grid.Row="2" ItemsSource="{Binding TransactionHistoryListViewItemSource}" SelectedItem="{Binding TransactionHistoryListViewSelectedItem}" HorizontalContentAlignment="Stretch">
+                <ListView Name="TransactionHistoryListView" Grid.Row="2" ItemsSource="{Binding TransactionHistoryListViewItemSource}" SelectedItem="{Binding TransactionHistoryListViewSelectedItem}" HorizontalContentAlignment="Stretch" MouseDoubleClick="TransactionHistoryListView_OnMouseDoubleClick">
                     <ListView.View>
                         <GridView>
                             <GridView.ColumnHeaderContainerStyle>
