@@ -42,9 +42,9 @@ namespace DebtMgr.Converters
             }
 
             if (doubleValue < 0.001 && doubleValue > -0.001)
-                return new SolidColorBrush(Colors.Green);
+                return new SolidColorBrush(Colors.Black);
 
-            if(doubleValue > 0)
+            if (doubleValue > 0)
                 return new SolidColorBrush(Colors.Green);
 
             if (doubleValue < 0)

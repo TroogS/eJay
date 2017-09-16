@@ -517,7 +517,7 @@ namespace DebtMgr.ViewModel
             // Remember selection
             var rememberSelection = PersonListViewSelectedItem?.Id;
 
-            var personList = App.Database.GetAllWithChildren<Person>();
+            var personList = App.Database.GetAllWithChildren<Person>().OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList();
             PersonListViewItemSource = personList;
 
             var overallBalance = personList.Sum(x => x.Total);

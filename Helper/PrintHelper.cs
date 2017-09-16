@@ -34,6 +34,10 @@ namespace DebtMgr.Helper
                 96, // These decides the dpi factors 
                 96,// The can be changed when we'll have preview options.
                 PixelFormats.Pbgra32);
+
+
+
+
             bitmap.Render(uiElement);
 
             SaveUsingBitmapTargetRenderer(fileName, bitmap, encoder);

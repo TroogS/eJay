@@ -89,7 +89,7 @@
                             <MenuItem Header="Add _Charge" Command="{Binding AddChargeContextMenuCommand}" />
                             <MenuItem Header="Add _Deposit" Command="{Binding AddDepositContextMenuCommand}" />
                             <Separator></Separator>
-                            <MenuItem Header="_Print" Click="PrintContextMenu_OnClick" IsEnabled="False" />
+                            <MenuItem Header="_Print" Click="PrintContextMenu_OnClick" IsEnabled="False"/>
                         </ContextMenu>
                     </ListBox.Resources>
                     <ListBox.ContextMenu>
@@ -104,7 +104,7 @@
                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
             </StackPanel>
             
-            <Grid Grid.Column="2">
+            <Grid Grid.Column="2" Name="RightPanel">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>

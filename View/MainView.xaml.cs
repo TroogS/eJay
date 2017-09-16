@@ -108,9 +108,9 @@ namespace DebtMgr.View
 
         private void PrintContextMenu_OnClick(object sender, RoutedEventArgs e)
         {
-            //var targetElement = TransactionHistoryListView;
+            var targetElement = RightPanel;
 
-            //PrintHelper.SaveUsingEncoder("test.png", targetElement);
+            PrintHelper.SaveUsingEncoder("test.png", targetElement);
             return;
         }
     }
