@@ -1,9 +1,7 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using DebtMgr.Helper;
 
 namespace DebtMgr.View
 {
@@ -106,12 +104,17 @@ namespace DebtMgr.View
 
         #endregion
 
-        private void PrintContextMenu_OnClick(object sender, RoutedEventArgs e)
+        private void Ribbon_Loaded(object sender, RoutedEventArgs e)
         {
-            var targetElement = RightPanel;
+            var grid = VisualTreeHelper.GetChild((DependencyObject)sender, 0) as Grid;
+            if (grid != null)
+            {
+                // Hide Quick Acces Menu
+                grid.RowDefinitions[0].Height = new GridLength(0);
 
-            PrintHelper.SaveUsingEncoder("test.png", targetElement);
-            return;
+                // Hidde Tab Bar
+                grid.RowDefinitions[1].Height = new GridLength(0);
+            }
         }
     }
 }

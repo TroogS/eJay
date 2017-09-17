@@ -205,7 +205,7 @@ namespace DebtMgr.ViewModel.Dialogs
                 {
                     transaction.Amount = AmountTextBoxTextNumberRepresentation;
                     transaction.Description = DescriptionTextBoxText;
-                    transaction.Time = DatePickerSelectedDate.Value;
+                    transaction.Time = DatePickerSelectedDate.Value.AddHours(12);
                 }
 
                 App.Database.InsertOrReplace(transaction);

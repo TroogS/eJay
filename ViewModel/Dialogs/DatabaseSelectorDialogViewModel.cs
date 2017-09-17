@@ -112,7 +112,7 @@ namespace DebtMgr.ViewModel.Dialogs
             var saveFileDialog = new SaveFileDialog
             {
                 Filter = "Debt Manager Database|*.dmdb|Standard database|*.db",
-                CreatePrompt = true
+                OverwritePrompt = true
             };
 
             if (saveFileDialog.ShowDialog() == true)
@@ -126,7 +126,5 @@ namespace DebtMgr.ViewModel.Dialogs
         }
 
         #endregion
-
-        
     }
 }

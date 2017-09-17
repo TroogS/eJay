@@ -22,6 +22,9 @@ namespace DebtMgr.Helper
             var height = (int)uiElement.ActualHeight;
             var width = (int)uiElement.ActualWidth;
 
+            var container = VisualTreeHelper.GetParent(uiElement) as UIElement;
+            var relativeLocation = uiElement.TranslatePoint(new Point(0, 0), container);
+
             // These two line of code make sure that you get completed visual bitmap.
             // In case your Framework Element is inside the scroll viewer then some part which is not
             // visible gets clip.  
@@ -41,6 +44,8 @@ namespace DebtMgr.Helper
             bitmap.Render(uiElement);
 
             SaveUsingBitmapTargetRenderer(fileName, bitmap, encoder);
+
+            uiElement.Arrange(new Rect(relativeLocation, new Point(relativeLocation.X+width, relativeLocation.Y+height)));
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

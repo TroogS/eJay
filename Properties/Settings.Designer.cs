@@ -34,5 +34,17 @@ namespace DebtMgr.Properties {
                 this["Database"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TelegramPath {
+            get {
+                return ((string)(this["TelegramPath"]));
+            }
+            set {
+                this["TelegramPath"] = value;
+            }
+        }
     }
 }

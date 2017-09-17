@@ -237,7 +237,7 @@ namespace DebtMgr.ViewModel.Dialogs
                             Type = DialogMode,
                             Description = DescriptionTextBoxText,
                             PersonId = person.Id,
-                            Time = DatePickerSelectedDate.Value
+                            Time = DatePickerSelectedDate.Value.AddHours(12)
                         });
 
                     App.Database.InsertOrReplaceWithChildren(person);

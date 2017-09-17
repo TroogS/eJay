@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:DebtMgr.Converters"
         mc:Ignorable="d"
+        Name="MainViewWindow"
         Icon="../Content/money_green.ico"
-        Title="Debt Manager" Height="600" MinHeight="600" Width="900" MinWidth="900">
+        Title="Debt Manager" Height="600" MinHeight="600" Width="900" MinWidth="900"
+        Background="White">
     <Window.Resources>
         <converters:AmountToColorConverter x:Key="AmountToColorConverter" />
         <Style TargetType="ListViewItem">
@@ -18,17 +20,37 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <!-- #region Menu -->
-
-        <DockPanel Grid.Row="0">
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="Menu">
-                    <MenuItem Header="_Switch Database" Command="{Binding SwitchDatabaseMenuCommand}" />
-                    <MenuItem Header="_Open Database location" Command="{Binding OpenDatabaseLocationMenuCommand}" />
-                </MenuItem>
-            </Menu>
-        </DockPanel>
-
+        <!-- #region Ribbon -->
+        <Ribbon Grid.Row="0" Loaded="Ribbon_Loaded" Margin="0 -1 0 0">
+            <Ribbon.QuickAccessToolBar>
+                <RibbonQuickAccessToolBar Visibility="Visible">
+                    <Label>asd</Label>
+                </RibbonQuickAccessToolBar>
+            </Ribbon.QuickAccessToolBar>
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu Visibility="Visible"></RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <RibbonTab Header="234">
+                <RibbonGroup Header="Person">
+                    <RibbonButton Label="New Person" SmallImageSource="../Content/addperson.ico" Command="{Binding NewPersonContextMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Edit Person" SmallImageSource="../Content/addperson.ico" Command="{Binding EditPersonContextMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Delete Person" SmallImageSource="../Content/delete.ico" Command="{Binding DeletePersonContextMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Save Screenshot" LargeImageSource="../Content/camera.png" Command="{Binding SaveScreenshotCommand}" CommandParameter="{Binding ElementName=RightPanel}" IsEnabled="{Binding ScreenshotPossible}"></RibbonButton>
+                    <RibbonButton Label="Send via Telegram" LargeImageSource="../Content/telegram.png" Command="{Binding SendViaTelegramCommand}" CommandParameter="{Binding ElementName=RightPanel}" IsEnabled="False"></RibbonButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Transaction">
+                    <RibbonButton Label="Edit Transaction" SmallImageSource="../Content/addperson.ico" Command="{Binding EditTransactionContextMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Delete Transaction" SmallImageSource="../Content/delete.ico" Command="{Binding DeleteTransactionContextMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Add Charge" LargeImageSource="../Content/money_red.ico" Command="{Binding AddChargeContextMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Add Deposit" LargeImageSource="../Content/money_green.ico" Command="{Binding AddDepositContextMenuCommand}"></RibbonButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Settings">
+                    <RibbonButton Label="Switch Database" SmallImageSource="../Content/db_plus.ico" Command="{Binding SwitchDatabaseMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Show Database Location" SmallImageSource="../Content/db_info.ico" Command="{Binding OpenDatabaseLocationMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Select Telegram Path" SmallImageSource="../Content/telegram.png" Command="{Binding SetTelegramLocationCommand}"></RibbonButton>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
         <!-- #endregion -->
 
         <Grid Grid.Row="1">
@@ -46,31 +68,21 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Overview" FontWeight="Bold" FontSize="22" Margin="0 0 0 -5"></Label>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontSize="18" Margin="5 0 0 5" VerticalAlignment="Center">
-                        <TextBlock Text="Overall Balance:"></TextBlock>
-                        <TextBlock Text="{Binding OverallBalanceLabel}" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                        <TextBlock Text="€" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                    </TextBlock>
-                    <Button Grid.Column="1" Padding="5" ToolTip="New Person" Margin="5 0 5 5" Command="{Binding NewPersonContextMenuCommand}">
-                        <Image Source="../Content/addperson.ico" Height="30" />
-                    </Button>
-                    
-                </Grid>
-                <ListView Name="PersonListView"  Grid.Row="2" ItemsSource="{Binding PersonListViewItemSource}" SelectedItem="{Binding PersonListViewSelectedItem}" MouseDoubleClick="PersonListView_OnMouseDoubleClick">
+                <TextBlock Grid.Row="1" FontSize="18" Margin="5 0 0 5" VerticalAlignment="Center">
+                    <TextBlock Text="Overall Balance:"></TextBlock>
+                    <TextBlock Text="{Binding OverallBalanceLabel}" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                    <TextBlock Text="€" Foreground="{Binding OverallBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                </TextBlock>
+                <ListView Name="PersonListView"  Grid.Row="2" ItemsSource="{Binding PersonListViewItemSource}" SelectedItem="{Binding PersonListViewSelectedItem}" MouseDoubleClick="PersonListView_OnMouseDoubleClick" SelectionMode="Single">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Width="100">
+                            <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Width="120">
                                 <GridViewColumnHeader Command="{Binding SortPersonListViewCommand}" CommandParameter="FirstName">First name</GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding LastName}" Width="100">
+                            <GridViewColumn DisplayMemberBinding="{Binding LastName}" Width="120">
                                 <GridViewColumnHeader Command="{Binding SortPersonListViewCommand}" CommandParameter="LastName">Last name</GridViewColumnHeader>
                             </GridViewColumn>
-                            <GridViewColumn Width="80">
+                            <GridViewColumn Width="84">
                                 <GridViewColumnHeader Command="{Binding SortPersonListViewCommand}" CommandParameter="Total">Balance</GridViewColumnHeader>
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
@@ -88,8 +100,6 @@
                             <Separator></Separator>
                             <MenuItem Header="Add _Charge" Command="{Binding AddChargeContextMenuCommand}" />
                             <MenuItem Header="Add _Deposit" Command="{Binding AddDepositContextMenuCommand}" />
-                            <Separator></Separator>
-                            <MenuItem Header="_Print" Click="PrintContextMenu_OnClick" IsEnabled="False"/>
                         </ContextMenu>
                     </ListBox.Resources>
                     <ListBox.ContextMenu>
@@ -114,25 +124,12 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Content="{Binding DetailViewHeaderLabelContent}" FontWeight="Bold" FontSize="22" Margin="0 0 0 -5"></Label>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" FontSize="18" Margin="5 0 0 5" VerticalAlignment="Center">
-                        <TextBlock Text="Balance:"></TextBlock>
-                        <TextBlock Text="{Binding DetailViewBalanceLabel}" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                        <TextBlock Text="€" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
-                    </TextBlock>
-                    <Button Grid.Column="1" Padding="5" ToolTip="Add Charge" Margin="5 0 0 5" Command="{Binding AddChargeContextMenuCommand}">
-                        <Image Source="../Content/money_red.ico" Height="30" />
-                    </Button>
-                    <Button Grid.Column="2" Padding="5" ToolTip="Add Deposit" Margin="5 0 5 5" Command="{Binding AddDepositContextMenuCommand}">
-                        <Image Source="../Content/money_green.ico" Height="30" />
-                    </Button>
-                </Grid>
-                <ListView Name="TransactionHistoryListView" Grid.Row="2" ItemsSource="{Binding TransactionHistoryListViewItemSource}" SelectedItem="{Binding TransactionHistoryListViewSelectedItem}" HorizontalContentAlignment="Stretch" MouseDoubleClick="TransactionHistoryListView_OnMouseDoubleClick">
+                <TextBlock Grid.Row="1" FontSize="18" Margin="5 0 0 5" VerticalAlignment="Center">
+                    <TextBlock Text="Balance:"></TextBlock>
+                    <TextBlock Text="{Binding DetailViewBalanceLabel}" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                    <TextBlock Text="€" Foreground="{Binding DetailViewBalanceLabel, Converter={StaticResource AmountToColorConverter}}"></TextBlock>
+                </TextBlock>
+                <ListView Name="TransactionHistoryListView" Grid.Row="2" ItemsSource="{Binding TransactionHistoryListViewItemSource}" SelectedItem="{Binding TransactionHistoryListViewSelectedItem}" HorizontalContentAlignment="Stretch" MouseDoubleClick="TransactionHistoryListView_OnMouseDoubleClick" SelectionMode="Single">
                     <ListView.View>
                         <GridView>
                             <GridView.ColumnHeaderContainerStyle>
@@ -148,12 +145,11 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Width="357" Header="Description" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Description}" Width="340" Header="Description" />
                         </GridView>
                     </ListView.View>
                     <ListBox.Resources>
                         <ContextMenu x:Key="TransactionHistoryListViewContextMenu">
-                            <MenuItem Header="_Edit Transaction" Command="{Binding EditTransactionContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />
                             <MenuItem Header="Delete Transaction" Command="{Binding DeleteTransactionContextMenuCommand}" CommandParameter="{Binding Path=SelectedItem}" />
                             <Separator></Separator>
                             <MenuItem Header="Add _Charge" Command="{Binding AddChargeContextMenuCommand}" />

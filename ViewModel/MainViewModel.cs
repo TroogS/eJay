@@ -10,6 +10,11 @@ using System;
 using System.Threading;
 using System.IO;
 using System.Diagnostics;
+using System.Windows.Controls;
+using DebtMgr.Helper;
+using Microsoft.Win32;
+using System.Windows.Markup;
+using System.Xml;
 
 namespace DebtMgr.ViewModel
 {
@@ -57,6 +62,10 @@ namespace DebtMgr.ViewModel
                 RaisePropertyChanged(() => PersonListViewSelectedItem);
                 DeletePersonContextMenuCommand.RaiseCanExecuteChanged();
                 EditPersonContextMenuCommand.RaiseCanExecuteChanged();
+                SaveScreenshotCommand.RaiseCanExecuteChanged();
+                SendViaTelegramCommand.RaiseCanExecuteChanged();
+
+                ScreenshotPossible = value != null;
 
                 UpdateDetailView();
             }
@@ -130,6 +139,105 @@ namespace DebtMgr.ViewModel
                 _overallBalanceLabel = value;
                 RaisePropertyChanged(() => OverallBalanceLabel);
             }
+        }
+
+        #endregion
+
+        #region ScreenshotPossible (bool) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="ScreenshotPossible" />
+        /// </summary>
+        private bool _screenshotPossible;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public bool ScreenshotPossible
+        {
+            get { return _screenshotPossible; }
+
+            set
+            {
+                _screenshotPossible = value;
+                RaisePropertyChanged(() => ScreenshotPossible);
+            }
+        }
+
+        #endregion
+
+        #region SaveScreenshotCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="SaveScreenshotCommand" />
+        /// </summary>
+        private RelayCommand<Grid> _saveScreenshotCommand = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand<Grid> SaveScreenshotCommand => _saveScreenshotCommand ?? (_saveScreenshotCommand = new RelayCommand<Grid>(SaveScreenshotCommand_Execute));
+
+        private void SaveScreenshotCommand_Execute(Grid grid)
+        {
+            if (grid == null) return;
+            if (grid.ActualHeight == 0 || grid.ActualWidth == 0) return;
+
+            var presetFileName = string.Format("{0}_{1}_{2}",
+                DateTime.Now.ToString("yyyyMMdd"),
+                PersonListViewSelectedItem.FirstName,
+                PersonListViewSelectedItem.LastName);
+
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "*.png|*.png";
+            saveFileDialog.OverwritePrompt = true;
+            saveFileDialog.FileName = presetFileName;
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                PrintHelper.SaveUsingEncoder(saveFileDialog.FileName, grid);
+                grid.ShowGridLines = false;
+            }
+
+            
+        }
+
+        #endregion
+
+        #region SendViaTelegramCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="SendViaTelegramCommand" />
+        /// </summary>
+        private RelayCommand<Grid> _sendViaTelegramCommand = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand<Grid> SendViaTelegramCommand => _sendViaTelegramCommand ?? (_sendViaTelegramCommand = new RelayCommand<Grid>(SendViaTelegramCommand_Execute, SendViaTelegramCommand_CanExecute));
+
+        private bool SendViaTelegramCommand_CanExecute(Grid grid)
+        {
+            if (grid == null) return false;
+            if (PersonListViewSelectedItem == null) return false;
+
+            var telegramPath = Properties.Settings.Default.TelegramPath;
+            if (string.IsNullOrWhiteSpace(telegramPath)) return false;
+            if (!File.Exists(telegramPath)) return false;
+
+            return true;
+        }
+
+        private void SendViaTelegramCommand_Execute(Grid grid)
+        {
+            if (grid == null) return;
+            if (grid.ActualHeight == 0 || grid.ActualWidth == 0) return;
+
+            var fileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".png");
+            var parameter = string.Format("-sendpath \"{0}\"", fileName);
+
+            //var proc = System.Diagnostics.Process.Start(Properties.Settings.Default.TelegramPath, parameter);
+            var proc = System.Diagnostics.Process.Start("explorer");
         }
 
         #endregion
@@ -488,6 +596,45 @@ namespace DebtMgr.ViewModel
             {
                 Process.Start("explorer.exe", "/select, " + Properties.Settings.Default.Database);
             }
+        }
+
+        #endregion
+
+        #region SetTelegramLocationCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="SetTelegramLocationCommand" />
+        /// </summary>
+        private RelayCommand _setTelegramLocationCommand = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand SetTelegramLocationCommand => _setTelegramLocationCommand ?? (_setTelegramLocationCommand = new RelayCommand(SetTelegramLocationCommand_Execute));
+
+        private void SetTelegramLocationCommand_Execute()
+        {
+            var checkTelegramPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Telegram Desktop");
+
+            var openFileDialog = new OpenFileDialog();
+
+            if (Directory.Exists(checkTelegramPath))
+                openFileDialog.InitialDirectory = checkTelegramPath;
+            else
+                openFileDialog.RestoreDirectory = true;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                if (Path.GetExtension(openFileDialog.FileName) == "exe" || Path.GetExtension(openFileDialog.FileName) == ".exe")
+                {
+                    Properties.Settings.Default.TelegramPath = openFileDialog.FileName;
+                    Properties.Settings.Default.Save();
+                }
+            }
+
+
         }
 
         #endregion
