@@ -213,9 +213,7 @@
     <Resource Include="Content\moneybag.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CurrencyTextBoxControl.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="CurrencyTextBoxControl.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
