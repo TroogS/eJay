@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Debt Manager - Select Database" Height="285" Width="400"
+        Title="eJay - Select Database" Height="285" Width="400"
         KeyUp="Window_OnKeyUp">
     <Grid>
         <Grid.RowDefinitions>

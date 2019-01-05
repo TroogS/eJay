@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Name="MainViewWindow"
         Icon="../Content/money_green.ico"
-        Title="Debt Manager" Height="600" MinHeight="600" Width="900" MinWidth="900"
+        Title="eJay" Height="600" MinHeight="600" Width="900" MinWidth="900"
         Background="White">
     <Window.Resources>
         <converters:AmountToColorConverter x:Key="AmountToColorConverter" />
@@ -36,7 +36,7 @@
                     <RibbonButton Label="Edit Person" SmallImageSource="../Content/addperson.ico" Command="{Binding EditPersonContextMenuCommand}"></RibbonButton>
                     <RibbonButton Label="Delete Person" SmallImageSource="../Content/delete.ico" Command="{Binding DeletePersonContextMenuCommand}"></RibbonButton>
                     <RibbonButton Label="Save Screenshot" LargeImageSource="../Content/camera.png" Command="{Binding SaveScreenshotCommand}" CommandParameter="{Binding ElementName=RightPanel}" IsEnabled="{Binding ScreenshotPossible}"></RibbonButton>
-                    <RibbonButton Label="Send via Telegram" LargeImageSource="../Content/telegram.png" Command="{Binding SendViaTelegramCommand}" CommandParameter="{Binding ElementName=RightPanel}" IsEnabled="False"></RibbonButton>
+                    <RibbonButton Label="Send via Telegram" LargeImageSource="../Content/telegram.png" Command="{Binding SendViaTelegramCommand}" CommandParameter="{Binding ElementName=RightPanel}"></RibbonButton>
                 </RibbonGroup>
                 <RibbonGroup Header="Transaction">
                     <RibbonButton Label="Edit Transaction" SmallImageSource="../Content/addperson.ico" Command="{Binding EditTransactionContextMenuCommand}"></RibbonButton>
@@ -46,7 +46,7 @@
                 </RibbonGroup>
                 <RibbonGroup Header="Settings">
                     <RibbonButton Label="Switch Database" SmallImageSource="../Content/db_plus.ico" Command="{Binding SwitchDatabaseMenuCommand}"></RibbonButton>
-                    <RibbonButton Label="Show Database Location" SmallImageSource="../Content/db_info.ico" Command="{Binding OpenDatabaseLocationMenuCommand}"></RibbonButton>
+                    <RibbonButton Label="Open Database Location" SmallImageSource="../Content/db_info.ico" Command="{Binding OpenDatabaseLocationMenuCommand}"></RibbonButton>
                     <RibbonButton Label="Select Telegram Path" SmallImageSource="../Content/telegram.png" Command="{Binding SetTelegramLocationCommand}"></RibbonButton>
                 </RibbonGroup>
             </RibbonTab>

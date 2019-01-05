@@ -236,8 +236,23 @@ namespace DebtMgr.ViewModel
             var fileName = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".png");
             var parameter = string.Format("-sendpath \"{0}\"", fileName);
 
-            //var proc = System.Diagnostics.Process.Start(Properties.Settings.Default.TelegramPath, parameter);
-            var proc = System.Diagnostics.Process.Start("explorer");
+            // Create temp screenshot
+            PrintHelper.SaveUsingEncoder(fileName, grid);
+
+            // Create cmd process
+            Process process = new Process();
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.FileName = Properties.Settings.Default.TelegramPath;
+
+            startInfo.Arguments = parameter;
+
+            // Attach command to process
+            process.StartInfo = startInfo;
+
+            // Start process
+            process.Start();
         }
 
         #endregion
