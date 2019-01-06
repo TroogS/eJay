@@ -1,7 +1,7 @@
 /*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocator xmlns:vm="clr-namespace:DebtMgr"
+      <vm:ViewModelLocator xmlns:vm="clr-namespace:eJay"
                            x:Key="Locator" />
   </Application.Resources>
   

@@ -1,11 +1,11 @@
 ﻿<package >
   <metadata>
     <id>eJay</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>TroogS</authors>
     <owners>TroogS</owners>
     <description>A tool to keep track of your private debts</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes></releaseNotes>
     <copyright>Copyright ©  2019</copyright>
   </metadata>
   <files>
