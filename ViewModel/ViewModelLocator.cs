@@ -12,11 +12,11 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using DebtMgr.ViewModel.Dialogs;
+using eJay.ViewModel.Dialogs;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
-namespace DebtMgr.ViewModel
+namespace eJay.ViewModel
 {
     /// <summary>
     /// This class contains static references to all the view models in the

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using DebtMgr.Model;
+using eJay.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SQLiteNetExtensions.Extensions;
 
-namespace DebtMgr.ViewModel.Dialogs
+namespace eJay.ViewModel.Dialogs
 {
     public class EditTransactionDialogViewModel : ViewModelBase
     {

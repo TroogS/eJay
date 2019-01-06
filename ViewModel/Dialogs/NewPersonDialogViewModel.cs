@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows;
-using DebtMgr.Model;
+using eJay.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
-namespace DebtMgr.ViewModel.Dialogs
+namespace eJay.ViewModel.Dialogs
 {
     public class NewPersonDialogViewModel : ViewModelBase
     {

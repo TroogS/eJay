@@ -2,7 +2,7 @@
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
-namespace DebtMgr.Model
+namespace eJay.Model
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A transaction. </summary>

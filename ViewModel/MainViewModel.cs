@@ -1,5 +1,5 @@
-using DebtMgr.Model;
-using DebtMgr.View.Dialogs;
+using eJay.Model;
+using eJay.View.Dialogs;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SQLiteNetExtensions.Extensions;
@@ -11,7 +11,7 @@ using System.Threading;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Controls;
-using DebtMgr.Helper;
+using eJay.Helper;
 using Microsoft.Win32;
 using System.Windows.Markup;
 using System.Xml;
@@ -19,7 +19,7 @@ using Squirrel;
 using NuGet;
 using System.Threading.Tasks;
 
-namespace DebtMgr.ViewModel
+namespace eJay.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {

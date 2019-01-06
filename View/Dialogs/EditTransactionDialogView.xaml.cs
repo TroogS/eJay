@@ -11,9 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using DebtMgr.Extensions;
+using eJay.Extensions;
 
-namespace DebtMgr.View.Dialogs
+namespace eJay.View.Dialogs
 {
     /// <summary>
     /// Interaktionslogik für EditTransactionDialogView.xaml

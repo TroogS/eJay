@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Squirrel;
 
-namespace DebtMgr.View
+namespace eJay.View
 {
     /// <summary>
     /// Interaktionslogik für MainView.xaml

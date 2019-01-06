@@ -4,11 +4,11 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Xml;
 using System.Xml.Serialization;
-using DebtMgr.Data;
-using DebtMgr.ViewModel;
+using eJay.Data;
+using eJay.ViewModel;
 using SQLite.Net;
 
-namespace DebtMgr
+namespace eJay
 {
     /// <summary>
     /// Interaktionslogik für "App.xaml"

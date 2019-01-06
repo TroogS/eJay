@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using SQLite.Net.Attributes;
 using SQLiteNetExtensions.Attributes;
 
-namespace DebtMgr.Model
+namespace eJay.Model
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A person. </summary>

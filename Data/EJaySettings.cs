@@ -1,4 +1,4 @@
-﻿namespace DebtMgr.Data
+﻿namespace eJay.Data
 {
     public class EJaySettings
     {

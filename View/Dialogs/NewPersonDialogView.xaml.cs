@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using DebtMgr.Extensions;
-using DebtMgr.Model;
+using eJay.Extensions;
+using eJay.Model;
 
-namespace DebtMgr.View.Dialogs
+namespace eJay.View.Dialogs
 {
     /// <summary>
     /// Interaktionslogik für NewPersonDialogView.xaml

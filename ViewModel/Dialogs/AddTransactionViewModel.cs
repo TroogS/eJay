@@ -1,4 +1,4 @@
-﻿using DebtMgr.Model;
+﻿using eJay.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SQLiteNetExtensions.Extensions;
@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 
-namespace DebtMgr.ViewModel.Dialogs
+namespace eJay.ViewModel.Dialogs
 {
     public class AddTransactionViewModel : ViewModelBase
     {

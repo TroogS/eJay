@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
-using DebtMgr.Model;
+using eJay.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using SQLite.Net;
 using SQLite.Net.Platform.Generic;
 
-namespace DebtMgr.ViewModel.Dialogs
+namespace eJay.ViewModel.Dialogs
 {
     public class DatabaseSelectorDialogViewModel : ViewModelBase
     {

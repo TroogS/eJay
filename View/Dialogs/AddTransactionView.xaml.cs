@@ -1,9 +1,9 @@
-﻿using DebtMgr.Extensions;
+﻿using eJay.Extensions;
 using System.Windows;
 using System.Windows.Input;
-using DebtMgr.Model;
+using eJay.Model;
 
-namespace DebtMgr.View.Dialogs
+namespace eJay.View.Dialogs
 {
     /// <summary>
     /// Interaktionslogik für AddTransactionView.xaml

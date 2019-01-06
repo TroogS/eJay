@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using DebtMgr.Model;
+using eJay.Model;
 using SQLite.Net;
 using SQLite.Net.Interop;
 using SQLite.Net.Platform.Generic;
 
-namespace DebtMgr.Data
+namespace eJay.Data
 {
     public class Database : SQLiteConnection
     {

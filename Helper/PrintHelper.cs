@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace DebtMgr.Helper
+namespace eJay.Helper
 {
     public class PrintHelper
     {

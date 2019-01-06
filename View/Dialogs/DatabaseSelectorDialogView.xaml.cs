@@ -1,10 +1,10 @@
-﻿using System;
+﻿using eJay;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using DebtMgr.Extensions;
+using eJay.Extensions;
 
-namespace DebtMgr.View.Dialogs
+namespace eJay.View.Dialogs
 {
     /// <summary>
     /// Interaktionslogik für DatabaseSelectorDialogView.xaml

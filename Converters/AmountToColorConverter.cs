@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace DebtMgr.Converters
+namespace eJay.Converters
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   An amount to color converter. </summary>

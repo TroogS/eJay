@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace DebtMgr.Model
+namespace eJay.Model
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   Values that represent transaction types. </summary>
