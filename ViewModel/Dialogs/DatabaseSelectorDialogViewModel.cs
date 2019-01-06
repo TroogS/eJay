@@ -59,7 +59,7 @@ namespace DebtMgr.ViewModel.Dialogs
             var openFileDialog = new OpenFileDialog
             {
                 CheckFileExists = true,
-                Filter = "Debt Manager Database|*.dmdb|All files|*.*"
+                Filter = "eJay Database|*.dmdb|All files|*.*"
             };
 
             //Application.Current.Shutdown();
@@ -72,8 +72,8 @@ namespace DebtMgr.ViewModel.Dialogs
                 {
                     x.Table<Person>().ToList();
 
-                    Properties.Settings.Default["Database"] = openFileDialog.FileName;
-                    Properties.Settings.Default.Save();
+                    App.Settings.Database = openFileDialog.FileName;
+                    App.SaveSettings();
 
                     ProgramRequestedClose = true;
                     RequestClose?.Invoke(null, null);
@@ -81,7 +81,7 @@ namespace DebtMgr.ViewModel.Dialogs
                 catch (Exception)
                 {
                     MessageBox.Show(
-                        string.Format("File is not a Debt Manager database\n\n{0}", openFileDialog.FileName),
+                        string.Format("File is not an eJay database\n\n{0}", openFileDialog.FileName),
                         "File invalid",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
@@ -95,6 +95,7 @@ namespace DebtMgr.ViewModel.Dialogs
         }
 
         #endregion
+
         #region CreateDatabaseButtonClick Command
 
         /// <summary>
@@ -111,14 +112,14 @@ namespace DebtMgr.ViewModel.Dialogs
         {
             var saveFileDialog = new SaveFileDialog
             {
-                Filter = "Debt Manager Database|*.dmdb|Standard database|*.db",
+                Filter = "eJay Database|*.dmdb|Standard database|*.db",
                 OverwritePrompt = true
             };
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                Properties.Settings.Default["Database"] = saveFileDialog.FileName;
-                Properties.Settings.Default.Save();
+                App.Settings.Database = saveFileDialog.FileName;
+                App.SaveSettings();
 
                 ProgramRequestedClose = true;
                 RequestClose?.Invoke(null, null);

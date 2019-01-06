@@ -15,6 +15,9 @@ using DebtMgr.Helper;
 using Microsoft.Win32;
 using System.Windows.Markup;
 using System.Xml;
+using Squirrel;
+using NuGet;
+using System.Threading.Tasks;
 
 namespace DebtMgr.ViewModel
 {
@@ -143,6 +146,164 @@ namespace DebtMgr.ViewModel
 
         #endregion
 
+        #region CurrentVersionLabelContent (string) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="CurrentVersionLabelContent" />
+        /// </summary>
+        private string _currentVersionLabelContent;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public string CurrentVersionLabelContent
+        {
+            get { return _currentVersionLabelContent; }
+
+            set
+            {
+                _currentVersionLabelContent = value;
+                RaisePropertyChanged(() => CurrentVersionLabelContent);
+            }
+        }
+
+        #endregion
+        #region UpdateInfoLabelContent (string) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="UpdateInfoLabelContent" />
+        /// </summary>
+        private string _updateInfoLabelContent;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public string UpdateInfoLabelContent
+        {
+            get { return _updateInfoLabelContent; }
+
+            set
+            {
+                _updateInfoLabelContent = value;
+                RaisePropertyChanged(() => UpdateInfoLabelContent);
+            }
+        }
+
+        #endregion
+        #region UpdateInfoLabelVisible (bool) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="UpdateInfoLabelVisible" />
+        /// </summary>
+        private bool _updateInfoLabelVisible;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public bool UpdateInfoLabelVisible
+        {
+            get { return _updateInfoLabelVisible; }
+
+            set
+            {
+                _updateInfoLabelVisible = value;
+                RaisePropertyChanged(() => UpdateInfoLabelVisible);
+            }
+        }
+
+        #endregion
+        #region UpdateButtonEnabled (bool) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="UpdateButtonEnabled" />
+        /// </summary>
+        private bool _updateButtonEnabled;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public bool UpdateButtonEnabled
+        {
+            get { return _updateButtonEnabled; }
+
+            set
+            {
+                _updateButtonEnabled = value;
+                RaisePropertyChanged(() => UpdateButtonEnabled);
+            }
+        }
+
+        #endregion
+        #region UpdateButtonVisible (bool) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="UpdateButtonVisible" />
+        /// </summary>
+        private bool _updateButtonVisible;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public bool UpdateButtonVisible
+        {
+            get { return _updateButtonVisible; }
+
+            set
+            {
+                _updateButtonVisible = value;
+                RaisePropertyChanged(() => UpdateButtonVisible);
+            }
+        }
+
+        #endregion
+        #region UpdateButtonLabel (string) Property
+
+        /// <summary>
+        /// Privater Teil von <see cref="UpdateButtonLabel" />
+        /// </summary>
+        private string _updateButtonLabel;
+
+        /// <summary>
+        /// Comment
+        ///</summary>
+        public string UpdateButtonLabel
+        {
+            get { return _updateButtonLabel; }
+
+            set
+            {
+                _updateButtonLabel = value;
+                RaisePropertyChanged(() => UpdateButtonLabel);
+            }
+        }
+
+        #endregion
+
+        #region UpdateButtonCommand Command
+
+        /// <summary>
+        /// Private member backing variable for <see cref="UpdateButtonCommand" />
+        /// </summary>
+        private RelayCommand _updateButtonCommand = null;
+
+        /// <summary>
+        /// Comment
+        /// </summary>
+        public RelayCommand UpdateButtonCommand => _updateButtonCommand ?? (_updateButtonCommand = new RelayCommand(UpdateButtonCommand_Execute));
+
+        private async void UpdateButtonCommand_Execute()
+        {
+            using (var updateManager = new UpdateManager("http://troogs.de/dev/update/ejay/"))
+            {
+                App.SaveSettings();
+                MessageBox.Show("The application will be updated and shut down. Please restart", "Update", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                await updateManager.UpdateApp();
+                App.Current.Shutdown();
+            }
+        }
+
+        #endregion
+
         #region ScreenshotPossible (bool) Property
 
         /// <summary>
@@ -221,7 +382,7 @@ namespace DebtMgr.ViewModel
             if (grid == null) return false;
             if (PersonListViewSelectedItem == null) return false;
 
-            var telegramPath = Properties.Settings.Default.TelegramPath;
+            var telegramPath = App.Settings.TelegramPath;
             if (string.IsNullOrWhiteSpace(telegramPath)) return false;
             if (!File.Exists(telegramPath)) return false;
 
@@ -244,7 +405,7 @@ namespace DebtMgr.ViewModel
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.FileName = Properties.Settings.Default.TelegramPath;
+            startInfo.FileName = App.Settings.TelegramPath;
 
             startInfo.Arguments = parameter;
 
@@ -582,8 +743,8 @@ namespace DebtMgr.ViewModel
 
         private void SwitchDatabaseMenuCommand_Execute()
         {
-            Properties.Settings.Default["Database"] = string.Empty;
-            Properties.Settings.Default.Save();
+            App.Settings.Database = string.Empty;
+            App.SaveSettings();
 
             Thread.Sleep(100);
 
@@ -607,9 +768,9 @@ namespace DebtMgr.ViewModel
 
         private void OpenDatabaseLocationMenuCommand_Execute()
         {
-            if (File.Exists(Properties.Settings.Default.Database))
+            if (File.Exists(App.Settings.Database))
             {
-                Process.Start("explorer.exe", "/select, " + Properties.Settings.Default.Database);
+                Process.Start("explorer.exe", "/select, " + App.Settings.Database);
             }
         }
 
@@ -644,8 +805,8 @@ namespace DebtMgr.ViewModel
             {
                 if (Path.GetExtension(openFileDialog.FileName) == "exe" || Path.GetExtension(openFileDialog.FileName) == ".exe")
                 {
-                    Properties.Settings.Default.TelegramPath = openFileDialog.FileName;
-                    Properties.Settings.Default.Save();
+                    App.Settings.TelegramPath = openFileDialog.FileName;
+                    App.SaveSettings();
                 }
             }
 
@@ -661,10 +822,49 @@ namespace DebtMgr.ViewModel
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public MainViewModel()
         {
-            CheckDatabase();    
+            CheckDatabase();
 
             UpdatePersonsList();
             UpdateDetailView();
+
+            new Task(PerformUpdaterInfo).Start();
+        }
+
+        public async void PerformUpdaterInfo()
+        {
+            using (var updateManager = new UpdateManager("http://troogs.de/dev/update/ejay/"))
+            {
+                try
+                {
+                    // Get current Version
+                    var executableDir = Path.GetDirectoryName(typeof(UpdateManager).Assembly.CodeBase)?
+                        .Split(Path.DirectorySeparatorChar)
+                        .LastOrDefault(d => d.StartsWith("app-", StringComparison.OrdinalIgnoreCase));
+                    var stringVersion = executableDir?.Replace("app-", "");
+                    var currentVersion = !string.IsNullOrWhiteSpace(stringVersion) ? new SemanticVersion(stringVersion) : null;
+
+                    CurrentVersionLabelContent = string.Format("Version: {0}", currentVersion);
+
+                    UpdateInfoLabelContent = "No updates found";
+                    UpdateButtonEnabled = false;
+                    UpdateButtonVisible = false;
+                    UpdateInfoLabelVisible = true;
+
+                    var updateInfo = await updateManager.CheckForUpdate();
+                    if (updateInfo.FutureReleaseEntry != null && updateInfo.FutureReleaseEntry.Version > currentVersion)
+                    {
+                        UpdateButtonLabel = string.Format("Update to {0}", updateInfo.FutureReleaseEntry.Version);
+                        UpdateInfoLabelVisible = false;
+                        UpdateButtonVisible = true;
+                        UpdateButtonEnabled = true;
+                        UpdateInfoLabelContent = "Update available";
+                    }
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
+            }
         }
 
         #region UpdatePersonsList()
@@ -731,7 +931,7 @@ namespace DebtMgr.ViewModel
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void CheckDatabase()
         {
-            var databasePath = Properties.Settings.Default.Database;
+            var databasePath = App.Settings.Database;
             if (string.IsNullOrWhiteSpace(databasePath))
             {
                 var window = new DatabaseSelectorDialogView();
@@ -745,7 +945,7 @@ namespace DebtMgr.ViewModel
             }
             catch (Exception)
             {
-                Properties.Settings.Default["Database"] = string.Empty;
+                App.Settings.Database = string.Empty;
                 CheckDatabase();
             }
         }

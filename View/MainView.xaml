@@ -10,6 +10,7 @@
         Title="eJay" Height="600" MinHeight="600" Width="900" MinWidth="900"
         Background="White">
     <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></converters:BoolToVisibilityConverter>
         <converters:AmountToColorConverter x:Key="AmountToColorConverter" />
         <Style TargetType="ListViewItem">
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -48,6 +49,11 @@
                     <RibbonButton Label="Switch Database" SmallImageSource="../Content/db_plus.ico" Command="{Binding SwitchDatabaseMenuCommand}"></RibbonButton>
                     <RibbonButton Label="Open Database Location" SmallImageSource="../Content/db_info.ico" Command="{Binding OpenDatabaseLocationMenuCommand}"></RibbonButton>
                     <RibbonButton Label="Select Telegram Path" SmallImageSource="../Content/telegram.png" Command="{Binding SetTelegramLocationCommand}"></RibbonButton>
+                </RibbonGroup>
+                <RibbonGroup Header="Application">
+                    <Label Content="{Binding CurrentVersionLabelContent}"></Label>
+                    <Label Content="{Binding UpdateInfoLabelContent}" Visibility="{Binding UpdateInfoLabelVisible, Converter={StaticResource BoolToVisibilityConverter}}"></Label>
+                    <RibbonButton SmallImageSource="../Content/moneybag.ico" Label="{Binding UpdateButtonLabel}" IsEnabled="{Binding UpdateButtonEnabled}" Visibility="{Binding UpdateButtonVisible, Converter={StaticResource BoolToVisibilityConverter}}" Command="{Binding UpdateButtonCommand}"></RibbonButton>
                 </RibbonGroup>
             </RibbonTab>
         </Ribbon>
